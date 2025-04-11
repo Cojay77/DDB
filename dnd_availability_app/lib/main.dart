@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'firebase_options.dart';
+import 'app.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+   // 🔔 Autoriser les notifications
+  await FirebaseMessaging.instance.requestPermission();
+
+  // 🆔 Afficher le token de l'utilisateur (pour test)
+  final token = await FirebaseMessaging.instance.getToken();
+  print("🔑 FCM Token: $token");
+  await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
+
+  runApp(const DndApp());
+}

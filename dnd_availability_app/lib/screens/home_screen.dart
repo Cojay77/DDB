@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final AuthService _authService = AuthService();
+  bool isAdmin = false;
+  String? userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = _authService.currentUser;
+    userEmail = user?.email;
+    if (user != null) {
+      _authService.isUserAdmin(user.uid).then((value) {
+        setState(() {
+          isAdmin = value;
+        });
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Accueil"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await _authService.logout();
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Bienvenue, ${userEmail ?? 'utilisateur'} !"),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/sessions');
+              },
+              child: const Text("Voir les sessions de jeu"),
+            ),
+            if (isAdmin)
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/admin');
+                },
+                child: const Text("Espace Admin"),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
