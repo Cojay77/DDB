@@ -14,6 +14,8 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   final FirebaseGameService _gameService = FirebaseGameService();
   final String _userId = FirebaseAuth.instance.currentUser!.uid;
+  final TextEditingController titleController = TextEditingController();
+  
 
   List<GameSession> sessions = [];
   bool loading = true;
@@ -37,9 +39,10 @@ class _AdminScreenState extends State<AdminScreen> {
 
   Future<void> createSession() async {
     final date = dateController.text.trim();
+    final String sessionTitle = titleController.text.trim();
     if (date.isEmpty) return;
 
-    await _gameService.createSession(date, _userId);
+    await _gameService.createSession(date, _userId, sessionTitle);
     dateController.clear();
     await loadSessions();
   }
@@ -52,8 +55,7 @@ class _AdminScreenState extends State<AdminScreen> {
   String formatDate(DateTime date) {
     final formatter = DateFormat("EEEE d MMMM", "fr_FR");
     final raw = formatter.format(date);
-    return raw[0].toUpperCase() +
-        raw.substring(1);
+    return raw[0].toUpperCase() + raw.substring(1);
   }
 
   @override
@@ -64,6 +66,10 @@ class _AdminScreenState extends State<AdminScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            TextField(
+              controller: titleController,
+              decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Titre')
+              ),
             ElevatedButton(
               onPressed: () async {
                 final picked = await showDatePicker(
@@ -92,7 +98,8 @@ class _AdminScreenState extends State<AdminScreen> {
                       ? null
                       : () async {
                         final formatted = formatDate(selectedDate!);
-                        await _gameService.createSession(formatted, _userId);
+                        final sessionTitle = titleController.text.trim();
+                        await _gameService.createSession(formatted, _userId, sessionTitle);
                         setState(() {
                           selectedDate = null;
                         });
@@ -111,7 +118,7 @@ class _AdminScreenState extends State<AdminScreen> {
                           final session = sessions[index];
                           return ListTile(
                             title: Text("📅 ${session.date}"),
-                            subtitle: Text("ID : ${session.id}"),
+                            subtitle: Text("Titre : ${session.title}"),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => deleteSession(session.id),

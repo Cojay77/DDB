@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController displayNameController = TextEditingController();
 
   final AuthService _authService = AuthService();
 
@@ -18,13 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    displayNameController.dispose();
     super.dispose();
   }
 
   Future<void> handleLogin() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-
+    
     final user = await _authService.login(email, password);
 
     if (user != null) {
@@ -43,8 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> handleSignUp() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    final displayName = displayNameController.text.trim();
 
-    final user = await _authService.register(email, password);
+    final user = await _authService.register(email, password, displayName);
 
     if (user != null) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -80,6 +83,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(labelText: 'Mot de passe'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: displayNameController,
+                  decoration: const InputDecoration(labelText: 'Pseudo (si tu crées un compte)'),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(

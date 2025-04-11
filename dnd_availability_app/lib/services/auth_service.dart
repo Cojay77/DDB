@@ -6,7 +6,7 @@ class AuthService {
   final FirebaseDatabase _db = FirebaseDatabase.instance;
 
   // Inscription
-  Future<User?> register(String email, String password) async {
+  Future<User?> register(String email, String password, String username) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -14,11 +14,12 @@ class AuthService {
       );
 
       User? user = result.user;
+      await user?.updateDisplayName(username);
 
       if (user != null) {
-        await _db.ref("users/${user.uid}").set({
+          await _db.ref("users/${user.uid}").set({
           "email": user.email,
-          "isAdmin": false,
+          "isAdmin": false
         });
       }
 

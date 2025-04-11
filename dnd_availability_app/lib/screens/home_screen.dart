@@ -12,12 +12,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthService _authService = AuthService();
   bool isAdmin = false;
   String? userEmail;
+  String? displayName;
 
   @override
   void initState() {
     super.initState();
     final user = _authService.currentUser;
     userEmail = user?.email;
+    displayName = user?.displayName;
     if (user != null) {
       _authService.isUserAdmin(user.uid).then((value) {
         setState(() {
@@ -46,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Bienvenue, ${userEmail ?? 'utilisateur'} !"),
+            Text("Bienvenue, ${displayName ?? 'utilisateur'} !"),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {

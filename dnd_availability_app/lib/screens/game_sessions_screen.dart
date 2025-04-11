@@ -73,6 +73,13 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Text(
+                                  session.title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontStyle: FontStyle.italic
+                                  ),
+                                ),
                                 const SizedBox(height: 4),
                                 Text(
                                   "${countAvailable(session)} joueur(s) disponible(s)",

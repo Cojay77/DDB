@@ -18,9 +18,10 @@ class FirebaseGameService {
     }
   }
 
-  Future<void> createSession(String date, String userId) async {
+  Future<void> createSession(String date, String userId, String title) async {
     final ref = db.ref("sessions").push();
     await ref.set({
+      "title": title,
       "date": date,
       "createdBy": userId,
       "availability": {},
