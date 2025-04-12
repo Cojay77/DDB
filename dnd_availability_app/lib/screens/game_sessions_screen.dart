@@ -55,81 +55,81 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
 
                   return Card(
                     margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                      vertical: 8,
+                      horizontal: 16,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: ExpansionTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      tilePadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      leading: const Icon(Icons.expand_more),
+                      title: Text(
+                        "📅 ${session.date}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ExpansionTile(
-                                  title: Text(
-                                    "📅 ${session.date}",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: 
-                                  Text(
-                                    "${session.title} ${countAvailable(session)} joueur(s) disponible(s)",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                                  children: [
-                                    FutureBuilder<List<String>>(
-                                      future: _gameService
-                                          .getAvailablePlayerNames(session),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        }
-                                        if (!snapshot.hasData ||
-                                            snapshot.data!.isEmpty) {
-                                          return const ListTile(
-                                            title: Text(
-                                              "Aucun joueur disponible",
-                                            ),
-                                          );
-                                        }
-                                        return Column(
-                                          children:
-                                              snapshot.data!
-                                                  .map(
-                                                    (email) => ListTile(
-                                                      leading: const Icon(
-                                                        Icons.person,
-                                                      ),
-                                                      title: Text(email),
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                              ],
+                          Text(
+                            session.title,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontStyle: FontStyle.italic,
                             ),
                           ),
-                          Switch(
-                            value: session.availability[_userId] ?? false,
-                            onChanged:
-                                (val) => toggleAvailability(session, val),
+                          const SizedBox(height: 4),
+                          Text(
+                            "${countAvailable(session)} joueur(s) disponible(s)",
+                            style: const TextStyle(fontSize: 13),
                           ),
                         ],
                       ),
+                      trailing: Switch(
+                        value: session.availability[_userId] ?? false,
+                        onChanged: (val) => toggleAvailability(session, val),
+                      ),
+                      children: [
+                        FutureBuilder<List<String>>(
+                          future: _gameService.getAvailablePlayerNames(session),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            final players = snapshot.data ?? [];
+                            if (players.isEmpty) {
+                              return const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text("Aucun joueur disponible"),
+                              );
+                            }
+
+                            return Column(
+                              children:
+                                  players
+                                      .map(
+                                        (email) => ListTile(
+                                          leading: const Icon(Icons.person),
+                                          title: Text(email),
+                                        ),
+                                      )
+                                      .toList(),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                      ],
                     ),
                   );
                 },

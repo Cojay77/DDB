@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class GameSession {
   String id;
   String title;
@@ -13,6 +15,15 @@ class GameSession {
     required this.availability,
   });
 
+  DateTime get parsedDate {
+    try {
+      final format = DateFormat("EEEE d MMMM", "fr_FR");
+      return format.parse(date);
+    } catch (_) {
+      return DateTime(2100);
+    }
+  }
+
   factory GameSession.fromMap(String id, Map data) {
     return GameSession(
       id: id,
@@ -24,10 +35,6 @@ class GameSession {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'date': date,
-      'createdBy': createdBy,
-      'availability': availability,
-    };
+    return {'date': date, 'createdBy': createdBy, 'availability': availability};
   }
 }

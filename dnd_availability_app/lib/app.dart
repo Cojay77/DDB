@@ -24,7 +24,7 @@ class _DndAppState extends State<DndApp> {
     _checkAuth();
   }
 
-    void _checkAuth() async {
+  void _checkAuth() async {
     await Future.delayed(const Duration(milliseconds: 100));
     final user = FirebaseAuth.instance.currentUser;
     setState(() {
@@ -35,12 +35,25 @@ class _DndAppState extends State<DndApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Disponibilités DnD',
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      title: 'D&D&B',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        cardTheme: CardTheme(
+          color: Colors.white,
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+        ),
+      ),
       locale: const Locale('fr', 'FR'),
-      supportedLocales: const [
-        Locale('fr', 'FR'),
-      ],
+      supportedLocales: const [Locale('fr', 'FR')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -55,9 +68,9 @@ class _DndAppState extends State<DndApp> {
         '/splash': (context) => const SplashScreen(),
         '/profile': (context) => const ProfileScreen(),
       },
-      home: initialScreen ?? const Scaffold(
-        body: Center(child: CircularProgressIndicator(),)
-      ),
+      home:
+          initialScreen ??
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

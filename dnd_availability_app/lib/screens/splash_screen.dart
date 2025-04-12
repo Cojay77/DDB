@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _checkAuth() async {
-    await Future.delayed(const Duration(milliseconds: 100)); // pour laisser le temps à Firebase
+    await Future.delayed(const Duration(milliseconds: 100));
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
