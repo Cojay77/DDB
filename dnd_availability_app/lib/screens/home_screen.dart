@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await _authService.logout();
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/login');
             },
           ),
         ],
@@ -63,10 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: const Text("Espace Admin"),
               ),
+            const SizedBox(height: 10),
+            IconButton(
+              icon: const Icon(Icons.person),
+              alignment: Alignment.bottomCenter,
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+            ),
+            const Text("Profil")
           ],
         ),
       ),
     );
   }
 }
-

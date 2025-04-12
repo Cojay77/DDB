@@ -32,4 +32,29 @@ class FirebaseGameService {
     final ref = db.ref("sessions/$sessionId/availability/$userId");
     await ref.set(available);
   }
+
+  Future<List<String>> getAvailablePlayerNames(GameSession session) async {
+  final db = FirebaseDatabase.instance;
+  final userRef = db.ref("users");
+
+  List<String> displayNames = [];
+
+  for (final entry in session.availability.entries) {
+    final uid = entry.key;
+    final isAvailable = entry.value;
+
+    if (isAvailable == true) {
+      final snap = await userRef.child(uid).get();
+      if (snap.exists) {
+        final data = snap.value as Map;
+        displayNames.add(data['displayName'] ?? uid);
+      } else {
+        displayNames.add(uid); // fallback si l'utilisateur n'est pas en DB
+      }
+    }
+  }
+
+  return displayNames;
+}
+
 }

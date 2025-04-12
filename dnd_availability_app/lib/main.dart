@@ -16,5 +16,6 @@ void main() async {
   print("🔑 FCM Token: $token");
   await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
 
-  runApp(const DndApp());
+  runApp(const DndApp(
+  ));
 }

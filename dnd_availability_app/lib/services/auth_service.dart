@@ -6,7 +6,7 @@ class AuthService {
   final FirebaseDatabase _db = FirebaseDatabase.instance;
 
   // Inscription
-  Future<User?> register(String email, String password, String username) async {
+  Future<User?> register(String email, String password, String displayName) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -14,12 +14,13 @@ class AuthService {
       );
 
       User? user = result.user;
-      await user?.updateDisplayName(username);
+      await user?.updateDisplayName(displayName);
 
       if (user != null) {
           await _db.ref("users/${user.uid}").set({
           "email": user.email,
-          "isAdmin": false
+          "isAdmin": false,
+          "displayName": displayName
         });
       }
 
@@ -28,6 +29,12 @@ class AuthService {
       print("Register error: $e");
       return null;
     }
+  }
+
+  Future setDisplayName(User user, String displayName) async {
+    _db.ref("users/${user.uid}").update({
+      "displayName": displayName,
+    });
   }
 
   // Connexion

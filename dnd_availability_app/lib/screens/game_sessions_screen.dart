@@ -67,23 +67,59 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "📅 ${session.date}",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                ExpansionTile(
+                                  title: Text(
+                                    "📅 ${session.date}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  session.title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontStyle: FontStyle.italic
+                                  subtitle: 
+                                  Text(
+                                    "${session.title} ${countAvailable(session)} joueur(s) disponible(s)",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontStyle: FontStyle.italic,
+                                    ),
                                   ),
+                                  children: [
+                                    FutureBuilder<List<String>>(
+                                      future: _gameService
+                                          .getAvailablePlayerNames(session),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                        if (!snapshot.hasData ||
+                                            snapshot.data!.isEmpty) {
+                                          return const ListTile(
+                                            title: Text(
+                                              "Aucun joueur disponible",
+                                            ),
+                                          );
+                                        }
+                                        return Column(
+                                          children:
+                                              snapshot.data!
+                                                  .map(
+                                                    (email) => ListTile(
+                                                      leading: const Icon(
+                                                        Icons.person,
+                                                      ),
+                                                      title: Text(email),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "${countAvailable(session)} joueur(s) disponible(s)",
-                                ),
+                                const SizedBox(height: 10),
                               ],
                             ),
                           ),
