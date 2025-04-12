@@ -66,13 +66,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               controller: _nameController,
               decoration: const InputDecoration(labelText: "Pseudo"),
             ),
-            const SizedBox(height: 12),
+            /* const SizedBox(height: 12),
             TextField(
               controller: _photoController,
               decoration: const InputDecoration(
                 labelText: "URL photo de profil",
               ),
-            ),
+            ), */
             /* const SizedBox(height: 20),
                         TextButton.icon(
               onPressed: _pickAndUploadImage,

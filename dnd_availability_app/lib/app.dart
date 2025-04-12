@@ -36,20 +36,48 @@ class _DndAppState extends State<DndApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'D&D&B',
-      theme: ThemeData(
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        fontFamily: 'UncialAntiqua',
+        textTheme: ThemeData.dark().textTheme.copyWith(
+          headlineMedium: TextStyle(fontFamily: 'UncialAntiqua'),
+          titleLarge: TextStyle(fontFamily: 'UncialAntiqua'),
+        ),
+        brightness: Brightness.dark,
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: const ColorScheme.dark(
+          primary: Color(0xFFFF4500), // feu
+          secondary: Color(0xFF8B0000), // rouge sombre
+          //background: Colors.black,
+          surface: Color(0xFF1E1E1E),
+          onPrimary: Colors.white,
+          onSecondary: Colors.white,
+          //onBackground: Colors.white,
+          onSurface: Colors.white70,
+        ),
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
         cardTheme: CardTheme(
-          color: Colors.white,
+          color: Color(0xFF1E1E1E),
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          centerTitle: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFFF4500),
+            foregroundColor: Colors.white,
+            textStyle: const TextStyle(fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
         ),
       ),
       locale: const Locale('fr', 'FR'),
