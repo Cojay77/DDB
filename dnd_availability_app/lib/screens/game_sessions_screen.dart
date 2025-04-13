@@ -134,6 +134,22 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
                   );
                 },
               ),
+      bottomNavigationBar: Container(
+        height: 60,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: const Border(top: BorderSide(color: Colors.grey)),
+        ),
+        child: Row(
+          children: [
+            //Image.asset('assets/dragon.png', height: 40, fit: BoxFit.contain),
+            Icon(Icons.whatshot),
+            const Spacer(flex: 1),
+            Text("D&D&B - release build", style: TextStyle(fontSize: 9)),
+          ],
+        ),
+      ),
     );
   }
 }

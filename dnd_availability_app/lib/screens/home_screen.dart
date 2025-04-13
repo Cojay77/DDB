@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
-//import 'package:package_info_plus/package_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       });
     }
-    /* PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      version = packageInfo.version;
-      //buildNumber = packageInfo.buildNumber;
-    }); */
+    _loadVersion();
   }
 
   Future<String> _fetchHomeMessage() async {
@@ -48,6 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return "Pas de message";
     }
+  }
+
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      version = '${info.version}+${info.buildNumber}';
+    });
   }
 
   @override
@@ -154,12 +158,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            /* Text(
-              "D&D&B - version $version",
-              style: TextStyle(
-                fontSize: 6,
-              ) ,
-            ), */
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: const Border(top: BorderSide(color: Colors.grey)),
+        ),
+        child: Row(
+          children: [
+            //Image.asset('assets/dragon.png', height: 40, fit: BoxFit.contain),
+            Icon(Icons.whatshot),
+            const Spacer(flex: 1),
+            Text("D&D&B - version $version", style: TextStyle(fontSize: 9))
           ],
         ),
       ),

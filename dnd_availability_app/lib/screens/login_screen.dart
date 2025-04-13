@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> handleLogin() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-    
+
     final user = await _authService.login(email, password);
 
     if (user != null) {
@@ -34,10 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       showDialog(
         context: context,
-        builder: (_) => const AlertDialog(
-          title: Text("Erreur"),
-          content: Text("Connexion échouée."),
-        ),
+        builder:
+            (_) => const AlertDialog(
+              title: Text("Erreur"),
+              content: Text("Connexion échouée."),
+            ),
       );
     }
   }
@@ -54,10 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       showDialog(
         context: context,
-        builder: (_) => const AlertDialog(
-          title: Text("Erreur"),
-          content: Text("Inscription échouée."),
-        ),
+        builder:
+            (_) => const AlertDialog(
+              title: Text("Erreur"),
+              content: Text("Inscription échouée."),
+            ),
       );
     }
   }
@@ -87,7 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 12),
                 TextField(
                   controller: displayNameController,
-                  decoration: const InputDecoration(labelText: 'Pseudo (si tu crées un compte)'),
+                  decoration: const InputDecoration(
+                    labelText: 'Pseudo (si tu crées un compte)',
+                  ),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -102,6 +106,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: const Border(top: BorderSide(color: Colors.grey)),
+        ),
+        child: Row(
+          children: [
+            //Image.asset('assets/dragon.png', height: 40, fit: BoxFit.contain),
+            Icon(Icons.whatshot),
+            const Spacer(flex: 1),
+            Text("D&D&B - release build", style: TextStyle(fontSize: 9)),
+          ],
         ),
       ),
     );
