@@ -96,8 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Row(
           children: [
-            //Image.asset('assets/dragon.png', height: 40, fit: BoxFit.contain),
-            Icon(Icons.whatshot),
+            Image.asset('assets/logo.png', height: 40, fit: BoxFit.contain),
             const Spacer(flex: 1),
             Text("D&D&B - release build", style: TextStyle(fontSize: 9))
           ],

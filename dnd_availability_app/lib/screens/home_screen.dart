@@ -170,8 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Row(
           children: [
-            //Image.asset('assets/dragon.png', height: 40, fit: BoxFit.contain),
-            Icon(Icons.whatshot),
+            Image.asset('assets/logo.png', height: 40, fit: BoxFit.contain),
             const Spacer(flex: 1),
             Text("D&D&B - version $version", style: TextStyle(fontSize: 9))
           ],
