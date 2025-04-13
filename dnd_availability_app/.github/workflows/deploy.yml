@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Copy Firebase service worker
-        run: cp firebase-messaging-sw.js build/web/
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -28,6 +25,9 @@ jobs:
 
       - name: Build web
         run: flutter build web --base-href /DDB/
+
+      - name: Copy Firebase service worker
+        run: cp firebase-messaging-sw.js build/web/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
