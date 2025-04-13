@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,7 +15,9 @@ void main() async {
   // 🆔 Afficher le token de l'utilisateur (pour test)
   final token = await FirebaseMessaging.instance.getToken();
   print("🔑 FCM Token: $token");
-  await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
+  if (!kIsWeb) {
+    await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
+  }
 
   runApp(const DndApp(
   ));
