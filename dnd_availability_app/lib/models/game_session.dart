@@ -17,7 +17,7 @@ class GameSession {
 
   DateTime get parsedDate {
     try {
-      final format = DateFormat("EEEE d MMMM", "fr_FR");
+      final format = DateFormat("d/M/yyyy");
       return format.parse(date);
     } catch (_) {
       return DateTime(2100);

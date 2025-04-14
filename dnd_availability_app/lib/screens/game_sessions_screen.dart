@@ -119,9 +119,18 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
                               children:
                                   players
                                       .map(
-                                        (email) => ListTile(
+                                        (username) => ListTile(
+                                          contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0,
+                                            horizontal: 10,
+                                          ),
+                                          dense: true,
+                                          visualDensity: VisualDensity(
+                                            horizontal: -4,
+                                            vertical: -4,
+                                          ),
                                           leading: const Icon(Icons.person),
-                                          title: Text(email),
+                                          title: Text(username),
                                         ),
                                       )
                                       .toList(),
