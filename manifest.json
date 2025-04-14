@@ -1,6 +1,6 @@
 {
-    "name": "dnd_availability_app",
-    "short_name": "dnd_availability_app",
+    "name": "D&D&B",
+    "short_name": "D&D&B",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
