@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            if ((kIsWeb || isStandalone()) && !isIOSBrowser()) ...[
+            if (kIsWeb && !isIOSBrowser() && !isAppInstalled()) ...[
               ElevatedButton(
                 onPressed: () {
                   js.context.callMethod('promptInstall');
