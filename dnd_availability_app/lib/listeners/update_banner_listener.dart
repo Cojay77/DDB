@@ -1,5 +1,5 @@
 import 'dart:html' as html;
-import 'package:flutter/foundation.dart';
+import 'package:dnd_availability_app/listeners/update_detector.dart';
 import 'package:flutter/material.dart';
 
 class UpdateBannerListener extends StatefulWidget {
@@ -14,15 +14,21 @@ class UpdateBannerListener extends StatefulWidget {
 class _UpdateBannerListenerState extends State<UpdateBannerListener> {
   bool _showBanner = false;
 
+    Future<void> checkUpdateAvailable() async {
+      final isOutdated = await hasNewVersion();
+
+      if (isOutdated) {
+        setState(() {
+          _showBanner = true;
+        });
+      }
+    }
+
   @override
   void initState() {
     super.initState();
 
-    if (kIsWeb) {
-      html.window.addEventListener('newVersionAvailable', (_) {
-        setState(() => _showBanner = true);
-      });
-    }
+    checkUpdateAvailable();
   }
 
   @override
