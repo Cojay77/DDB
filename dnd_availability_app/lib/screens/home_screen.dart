@@ -1,4 +1,5 @@
 import 'package:dnd_availability_app/helpers/update_helper.dart';
+import 'package:dnd_availability_app/models/update_banner.dart';
 import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
 import 'package:dnd_availability_app/utils/pwa_utils.dart';
 import 'package:flutter/foundation.dart';
@@ -199,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ],
+            const UpdateBanner(),
           ],
         ),
       ),
