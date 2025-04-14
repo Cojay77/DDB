@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: handleSignUp,
                   child: const Text("Créer un compte"),
                 ),
-                if (kIsWeb && !isIOSBrowser() && !isAppInstalled()) ...[
+                if ((kIsWeb || isStandalone()) && !isIOSBrowser()) ...[
                   ElevatedButton(
                     onPressed: () {
                       js.context.callMethod('promptInstall');
