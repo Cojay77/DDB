@@ -43,7 +43,6 @@ class _DndAppState extends State<DndApp> {
         textTheme: ThemeData.dark().textTheme.copyWith(
           headlineMedium: TextStyle(fontFamily: 'UncialAntiqua'),
           titleLarge: TextStyle(fontFamily: 'UncialAntiqua'),
-          bodyLarge: TextStyle(color: Color(0xFFF5F5F5)),
         ),
         brightness: Brightness.dark,
         useMaterial3: true,

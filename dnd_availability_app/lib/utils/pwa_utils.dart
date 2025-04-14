@@ -4,7 +4,7 @@ import 'dart:js' as js;
 import 'package:flutter/foundation.dart';
 
 bool isAppInstalled() {
-  if (!kIsWeb || _isStandalone()) return false;
+  if (!kIsWeb || !_isStandalone()) return false;
 
   try {
     return js.context.callMethod('isInStandaloneMode') as bool;
