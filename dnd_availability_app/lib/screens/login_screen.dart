@@ -1,4 +1,5 @@
 import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
+import 'package:dnd_availability_app/utils/pwa_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: handleSignUp,
                   child: const Text("Créer un compte"),
                 ),
-                if (kIsWeb && !isIOSBrowser()) ...[
+                if (kIsWeb && !isIOSBrowser() && !isAppInstalled()) ...[
                   ElevatedButton(
                     onPressed: () {
                       js.context.callMethod('promptInstall');
