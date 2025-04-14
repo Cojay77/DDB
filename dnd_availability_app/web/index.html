@@ -20,7 +20,7 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
-  <meta name="theme-color" content="#1E1E1E">
+  <meta name="theme-color" content="0xFF1E1E1E">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -34,6 +34,15 @@
   <title>dnd_availability_app</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      const event = new CustomEvent("newVersionAvailable");
+      window.dispatchEvent(event);
+    });
+  }
+</script>
 
 <body>
   <script src="flutter_bootstrap.js" async></script>

@@ -1,3 +1,4 @@
+import 'package:dnd_availability_app/helpers/update_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/game_session.dart';
@@ -20,6 +21,7 @@ class _GameSessionsScreenState extends State<GameSessionsScreen> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() => checkUpdate(context));
     loadSessions();
   }
 

@@ -1,3 +1,4 @@
+import 'package:dnd_availability_app/listeners/update_banner_listener.dart';
 import 'package:dnd_availability_app/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,71 +35,73 @@ class _DndAppState extends State<DndApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'D&D&B',
-      themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        fontFamily: 'UncialAntiqua',
-        textTheme: ThemeData.dark().textTheme.copyWith(
-          headlineMedium: TextStyle(fontFamily: 'UncialAntiqua'),
-          titleLarge: TextStyle(fontFamily: 'UncialAntiqua'),
-        ),
-        brightness: Brightness.dark,
-        useMaterial3: true,
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFFFF4500), // feu
-          secondary: Color(0xFF8B0000), // rouge sombre
-          //background: Colors.black,
-          surface: Color(0xFF1E1E1E),
-          onPrimary: Colors.white,
-          onSecondary: Colors.white,
-          //onBackground: Colors.white,
-          onSurface: Colors.white70,
-        ),
-        scaffoldBackgroundColor: Colors.black,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          elevation: 0,
-        ),
-        cardTheme: CardTheme(
-          color: Color(0xFF1E1E1E),
-          elevation: 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+    return UpdateBannerListener(
+      child: MaterialApp(
+        title: 'D&D&B',
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+          fontFamily: 'UncialAntiqua',
+          textTheme: ThemeData.dark().textTheme.copyWith(
+            headlineMedium: TextStyle(fontFamily: 'UncialAntiqua'),
+            titleLarge: TextStyle(fontFamily: 'UncialAntiqua'),
           ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFFF4500),
+          brightness: Brightness.dark,
+          useMaterial3: true,
+          colorScheme: const ColorScheme.dark(
+            primary: Color(0xFFFF4500), // feu
+            secondary: Color(0xFF8B0000), // rouge sombre
+            //background: Colors.black,
+            surface: Color(0xFF1E1E1E),
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+            //onBackground: Colors.white,
+            onSurface: Colors.white70,
+          ),
+          scaffoldBackgroundColor: Colors.black,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.black,
             foregroundColor: Colors.white,
-            textStyle: const TextStyle(fontWeight: FontWeight.bold),
+            elevation: 0,
+          ),
+          cardTheme: CardTheme(
+            color: Color(0xFF1E1E1E),
+            elevation: 3,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFF4500),
+              foregroundColor: Colors.white,
+              textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
         ),
+        locale: const Locale('fr', 'FR'),
+        supportedLocales: const [Locale('fr', 'FR')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        initialRoute: '/',
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/home': (context) => const HomeScreen(),
+          '/admin': (context) => const AdminScreen(),
+          '/sessions': (context) => const GameSessionsScreen(),
+          '/splash': (context) => const SplashScreen(),
+          '/profile': (context) => const ProfileScreen(),
+        },
+        home:
+            initialScreen ??
+            const Scaffold(body: Center(child: CircularProgressIndicator())),
       ),
-      locale: const Locale('fr', 'FR'),
-      supportedLocales: const [Locale('fr', 'FR')],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      initialRoute: '/',
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/admin': (context) => const AdminScreen(),
-        '/sessions': (context) => const GameSessionsScreen(),
-        '/splash': (context) => const SplashScreen(),
-        '/profile': (context) => const ProfileScreen(),
-      },
-      home:
-          initialScreen ??
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

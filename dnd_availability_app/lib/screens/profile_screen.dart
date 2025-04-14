@@ -1,3 +1,4 @@
+import 'package:dnd_availability_app/helpers/update_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
@@ -21,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() => checkUpdate(context));
     _nameController.text = user.displayName ?? '';
     _photoController.text = user.photoURL ?? '';
   }
@@ -33,8 +35,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       await _authService.setDisplayName(user, displayName);
       await user.reload(); // recharge l'utilisateur
       setState(() {});
-      
-    // met à jour l'affichage
+
+      // met à jour l'affichage
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text("✅ Profil mis à jour !")));
@@ -98,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Image.asset('assets/logo.png', height: 40, fit: BoxFit.contain),
             const Spacer(flex: 1),
-            Text("D&D&B - release build", style: TextStyle(fontSize: 9))
+            Text("D&D&B - release build", style: TextStyle(fontSize: 9)),
           ],
         ),
       ),
