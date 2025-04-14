@@ -32,9 +32,15 @@ jobs:
         run: cp firebase-messaging-sw.js build/web/
         working-directory: dnd_availability_app
 
+      - name: Move web build to root for deploy
+        run: |
+          rm -rf temp_web
+          cp -r dnd_availability_app/build/web ./temp_web      
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/web
-          publish_branch: gh-pages
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./temp_web
+            publish_branch: gh-pages
+        
