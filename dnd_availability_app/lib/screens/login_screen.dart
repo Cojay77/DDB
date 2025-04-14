@@ -1,3 +1,4 @@
+import 'package:dnd_availability_app/services/notification_service.dart';
 import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
 import 'package:dnd_availability_app/utils/pwa_utils.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = passwordController.text.trim();
 
     final user = await _authService.login(email, password);
+
+    if (kIsWeb && user?.uid != null) {
+      var userId = user?.uid;
+      registerWebToken(userId!);
+    }
 
     if (user != null) {
       Navigator.pushReplacementNamed(context, '/home');
