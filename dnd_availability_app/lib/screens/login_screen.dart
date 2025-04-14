@@ -1,5 +1,8 @@
+import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import 'dart:js' as js;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -103,6 +106,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: handleSignUp,
                   child: const Text("Créer un compte"),
                 ),
+                if (kIsWeb && !isIOSBrowser()) ...[
+                  ElevatedButton(
+                    onPressed: () {
+                      js.context.callMethod('promptInstall');
+                    },
+                    child: const Text("Installer l’application"),
+                  ),
+                ],
+                if (kIsWeb && isIOSBrowser()) ...[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.ios_share, color: Colors.white, size: 28),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              "Pour installer l'application :\nAppuyez sur "
+                              "le bouton de partage (en bas de l'écran), "
+                              "puis \"Ajouter à l’écran d’accueil\".",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

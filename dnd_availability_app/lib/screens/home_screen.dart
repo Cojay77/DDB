@@ -1,7 +1,10 @@
+import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'dart:js' as js;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -158,6 +161,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            if (kIsWeb && !isIOSBrowser()) ...[
+              ElevatedButton(
+                onPressed: () {
+                  js.context.callMethod('promptInstall');
+                },
+                child: const Text("Installer l’application"),
+              ),
+            ],
+            if (kIsWeb && isIOSBrowser()) ...[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.ios_share, color: Colors.white, size: 28),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          "Pour installer l'application :\nAppuyez sur "
+                          "le bouton de partage (en bas de l'écran), "
+                          "puis \"Ajouter à l’écran d’accueil\".",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -172,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset('assets/logo.png', height: 40, fit: BoxFit.contain),
             const Spacer(flex: 1),
-            Text("D&D&B - version $version", style: TextStyle(fontSize: 9))
+            Text("D&D&B - version $version", style: TextStyle(fontSize: 9)),
           ],
         ),
       ),

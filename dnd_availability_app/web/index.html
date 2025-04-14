@@ -34,5 +34,14 @@
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    let deferredPrompt;
+  
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      window.promptInstall = () => deferredPrompt.prompt();
+    });
+  </script>  
 </body>
 </html>
