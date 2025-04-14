@@ -22,12 +22,15 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: dnd_availability_app
 
       - name: Build web
         run: flutter build web --base-href /DDB/
+        working-directory: dnd_availability_app
 
       - name: Copy Firebase service worker
         run: cp firebase-messaging-sw.js build/web/
+        working-directory: dnd_availability_app
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
