@@ -9,16 +9,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-   // 🔔 Autoriser les notifications
   await FirebaseMessaging.instance.requestPermission();
 
-  // 🆔 Afficher le token de l'utilisateur (pour test)
-  final token = await FirebaseMessaging.instance.getToken();
-  print("🔑 FCM Token: $token");
+  //final token = await FirebaseMessaging.instance.getToken();
+  //print("🔑 FCM Token: $token");
   if (!kIsWeb) {
     await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
   }
 
-  runApp(const DndApp(
-  ));
+  runApp(const DndApp());
 }
