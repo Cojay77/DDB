@@ -60,6 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final user = await _authService.register(email, password, displayName);
 
+    if (kIsWeb && user?.uid != null) {
+      var userId = user?.uid;
+      registerWebToken(userId!);
+    }
+
     if (user != null) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
