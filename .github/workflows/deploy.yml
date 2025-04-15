@@ -30,7 +30,6 @@ jobs:
 
       - name: Copy Firebase service worker
         run: cp web/firebase-messaging-sw.js build/web/
-        working-directory: dnd_availability_app
 
       - name: Move web build to root for deploy
         run: |

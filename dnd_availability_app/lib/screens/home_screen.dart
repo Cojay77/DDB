@@ -53,6 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<String> _fetchReleaseNote() async {
+    final messageRef = _dbRef;
+    final snap = await messageRef.child('text').get();
+    if (snap.exists) {
+      return snap.value.toString().replaceAll("\\n", "\n");
+    } else {
+      return "Pas de message";
+    }
+  }
+
   Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
     setState(() {
@@ -153,6 +163,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                         if (!snapshot.hasData) {
                           return const Text("Aucun message pour le moment.");
+                        }
+                        return Text(
+                          snapshot.data!,
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyMedium,
+                        );
+                      },
+                    ),
+                    Icon(
+                      Icons.new_releases,
+                      size: 30,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(height: 10),
+                    FutureBuilder<String>(
+                      future: _fetchReleaseNote(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (!snapshot.hasData) {
+                          return const Text("");
                         }
                         return Text(
                           snapshot.data!,
