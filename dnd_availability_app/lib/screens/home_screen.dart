@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final messageRef = _dbRef;
     final snap = await messageRef.child('text').get();
     if (snap.exists) {
-      return snap.value.toString();
+      return snap.value.toString().replaceAll("\n", "\n");
     } else {
       return "Pas de message";
     }
