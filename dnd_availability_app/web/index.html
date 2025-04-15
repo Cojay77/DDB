@@ -36,10 +36,16 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('firebase-messaging-sw.js');
+      navigator.serviceWorker.register('firebase-messaging-sw.js')
+        .then((reg) => {
+          console.log('✅ Service worker enregistré', reg);
+        })
+        .catch((err) => {
+          console.error('❌ Erreur enregistrement SW:', err);
+        });
     }
   </script>
-  
+
 </head>
 
 <script>

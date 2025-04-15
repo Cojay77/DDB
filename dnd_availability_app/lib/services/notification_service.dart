@@ -7,10 +7,13 @@ Future<void> registerWebToken(String userId) async {
 
   try {
     final token = await FirebaseMessaging.instance.getToken();
+
     if (token != null) {
       final ref = FirebaseDatabase.instance.ref('webTokens/$userId');
       await ref.set(token);
       debugPrint("✅ Web token enregistré : $token");
+    } else {
+      debugPrint("❌ Aucun token reçu");
     }
   } catch (e) {
     debugPrint("❌ Erreur lors de l'enregistrement du token Web : $e");
