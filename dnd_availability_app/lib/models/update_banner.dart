@@ -24,7 +24,8 @@ class _UpdateBannerState extends State<UpdateBanner> {
   Future<void> _checkForUpdate() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final alreadyDismissed = prefs.getBool('update_banner_dismissed') ?? false;
+      final alreadyDismissed =
+          prefs.getBool('update_banner_dismissed') ?? false;
       if (alreadyDismissed) return;
 
       final info = await PackageInfo.fromPlatform();
@@ -38,7 +39,9 @@ class _UpdateBannerState extends State<UpdateBanner> {
         final minVersion = data['minVersion']?.toString();
         final message = data['messageUpdate']?.toString();
 
-        if (minVersion != null && message != null && minVersion != localVersion) {
+        if (minVersion != null &&
+            message != null &&
+            minVersion != localVersion) {
           setState(() {
             updateMessage = message;
             _showBanner = true;
@@ -74,11 +77,7 @@ class _UpdateBannerState extends State<UpdateBanner> {
             Expanded(
               child: Text(
                 updateMessage!,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'UncialAntiqua', // Si utilisée
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
               ),
             ),
             IconButton(

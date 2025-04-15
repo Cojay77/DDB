@@ -1,4 +1,3 @@
-import 'package:dnd_availability_app/helpers/update_helper.dart';
 import 'package:dnd_availability_app/models/update_banner.dart';
 import 'package:dnd_availability_app/utils/platform_utils_stub.dart';
 import 'package:dnd_availability_app/utils/pwa_utils.dart';
@@ -29,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => checkUpdate(context));
     //_fetchHomeMessage();
     final user = _authService.currentUser;
     userEmail = user?.email;
@@ -48,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final messageRef = _dbRef;
     final snap = await messageRef.child('text').get();
     if (snap.exists) {
-      return snap.value.toString().replaceAll("\n", "\n");
+      return snap.value.toString().replaceAll("\\n", "\n");
     } else {
       return "Pas de message";
     }

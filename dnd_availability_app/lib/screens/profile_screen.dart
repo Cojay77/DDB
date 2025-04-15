@@ -1,4 +1,3 @@
-import 'package:dnd_availability_app/helpers/update_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
@@ -22,7 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => checkUpdate(context));
     _nameController.text = user.displayName ?? '';
     _photoController.text = user.photoURL ?? '';
   }
