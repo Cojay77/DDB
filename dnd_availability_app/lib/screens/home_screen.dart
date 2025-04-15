@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<String> _fetchReleaseNote() async {
     final messageRef = _dbRef;
-    final snap = await messageRef.child('text').get();
+    final snap = await messageRef.child('releasenote').get();
     if (snap.exists) {
       return snap.value.toString().replaceAll("\\n", "\n");
     } else {
