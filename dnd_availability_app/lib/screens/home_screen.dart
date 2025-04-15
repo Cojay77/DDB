@@ -7,6 +7,7 @@ import '../services/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'dart:js' as js;
+import 'package:dnd_availability_app/helpers/notifications_debug.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -82,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (isAdmin) const NotificationsDebug(),
             Text("Bienvenue, ${displayName ?? 'utilisateur'} !"),
             const SizedBox(height: 30),
             ElevatedButton.icon(
