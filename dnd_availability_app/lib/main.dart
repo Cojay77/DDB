@@ -37,7 +37,7 @@ void main() async {
   }
 
   if (kIsWeb) {
-    registerCustomSW();
+    await registerCustomSW();
 
     FirebaseMessaging.instance
         .getToken(

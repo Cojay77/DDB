@@ -171,12 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
+                    const SizedBox(height: 20),
                     Icon(
                       Icons.new_releases,
                       size: 30,
                       color: theme.colorScheme.primary,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     FutureBuilder<String>(
                       future: _fetchReleaseNote(),
                       builder: (context, snapshot) {
