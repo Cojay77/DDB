@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: 30,
                       color: theme.colorScheme.primary,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     FutureBuilder<String>(
                       future: _fetchReleaseNote(),
                       builder: (context, snapshot) {
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                         return Text(
                           snapshot.data!,
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                           style: theme.textTheme.bodyMedium,
                         );
                       },

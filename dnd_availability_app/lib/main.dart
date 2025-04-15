@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 import 'app.dart';
+import 'dart:js' as js;
+import 'dart:js_util' as jsu;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,13 +13,25 @@ void main() async {
 
   await FirebaseMessaging.instance.requestPermission();
 
-  //final token = await FirebaseMessaging.instance.getToken();
-  //print("🔑 FCM Token: $token");
-  if (!kIsWeb) {
-    await FirebaseMessaging.instance.subscribeToTopic("weekly-reminder");
+  Future<dynamic> registerCustomSW() async {
+    if (js.context.hasProperty('navigator')) {
+      final navigator = js.context['navigator'];
+      if (navigator.hasProperty('serviceWorker')) {
+        final serviceWorker = navigator['serviceWorker'];
+        final register = serviceWorker.callMethod('register', [
+          '/DDB/firebase-messaging-sw.js',
+          js.JsObject.jsify({'scope': '/DDB/'}),
+        ]);
+        final result = await jsu.promiseToFuture(register);
+        return result;
+      }
+    }
+    return null;
   }
 
   if (kIsWeb) {
+    await registerCustomSW();
+
     FirebaseMessaging.instance
         .getToken(
           vapidKey:
