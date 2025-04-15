@@ -15,7 +15,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="/">
+  <base href="/DDB/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -36,13 +36,15 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('firebase-messaging-sw.js')
-        .then((reg) => {
-          console.log('✅ Service worker enregistré', reg);
-        })
-        .catch((err) => {
-          console.error('❌ Erreur enregistrement SW:', err);
-        });
+      navigator.serviceWorker.register('/DDB/firebase-messaging-sw.js', {
+        scope: '/DDB/',
+      })
+      .then((reg) => {
+        console.log('✅ SW enregistré avec scope /DDB/', reg);
+      })
+      .catch((err) => {
+        console.error('❌ Erreur SW:', err);
+      });
     }
   </script>
 
