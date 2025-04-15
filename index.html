@@ -33,6 +33,13 @@
 
   <title>dnd_availability_app</title>
   <link rel="manifest" href="manifest.json">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('firebase-messaging-sw.js');
+    }
+  </script>
+  
 </head>
 
 <script>
