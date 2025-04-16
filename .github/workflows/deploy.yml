@@ -32,10 +32,13 @@ jobs:
         run: cp web/firebase-messaging-sw.js build/web/
         working-directory: dnd_availability_app
 
+      - name: Duplicate fallback service worker to root
+        run: cp dnd_availability_app/web/firebase-messaging-sw.js ./temp_web/firebase-messaging-sw.js
+
       - name: Move web build to root for deploy
         run: |
           rm -rf temp_web
-          cp -r dnd_availability_app/build/web ./temp_web      
+          cp -r dnd_availability_app/build/web ./temp_web          
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
