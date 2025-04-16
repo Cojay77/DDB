@@ -38,7 +38,7 @@ jobs:
           cp -r dnd_availability_app/build/web ./temp_web  
           
       - name: Duplicate built service worker to root
-        run: cp dnd_availability_app/build/web/firebase-messaging-sw.js ./temp_web/firebase-messaging-sw.js
+        run: cp dnd_availability_app/build/web/firebase-messaging-sw-copy.js ./temp_web/firebase-messaging-sw.js
         
 
       - name: Deploy to GitHub Pages
