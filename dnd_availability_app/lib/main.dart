@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 import 'app.dart';
-import 'dart:js' as js;
-import 'dart:js_util' as jsu;
+/* import 'dart:js' as js;
+import 'dart:js_util' as jsu; */
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +13,7 @@ void main() async {
 
   await FirebaseMessaging.instance.requestPermission();
 
-  Future<void> registerCustomSW() async {
+/*   Future<void> registerCustomSW() async {
     try {
       final navigator = jsu.getProperty(js.context, 'navigator');
       if (navigator == null) {
@@ -38,11 +38,11 @@ void main() async {
     } catch (e) {
       debugPrint("💥 Erreur SW : $e");
     }
-  }
+  } */
 
   runApp(const DndApp());
-  
-    if (kIsWeb) {
+
+   /*  if (kIsWeb) {
     await registerCustomSW();
 
     FirebaseMessaging.instance
@@ -56,6 +56,5 @@ void main() async {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("📥 Message en foreground : ${message.notification?.title}");
-    });
+    }); */
   }
-}

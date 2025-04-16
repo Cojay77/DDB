@@ -1,5 +1,6 @@
 import 'package:dnd_availability_app/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screens/login_screen.dart';
@@ -7,6 +8,8 @@ import 'screens/home_screen.dart';
 import 'screens/admin_screen.dart';
 import 'screens/game_sessions_screen.dart';
 import 'screens/splash_screen.dart';
+import 'dart:js' as js;
+import 'dart:js_util' as jsu;
 
 class DndApp extends StatefulWidget {
   const DndApp({super.key});
@@ -22,6 +25,36 @@ class _DndAppState extends State<DndApp> {
   void initState() {
     super.initState();
     _checkAuth();
+    if (kIsWeb) {
+      registerCustomSW();
+    }
+  }
+
+    Future<void> registerCustomSW() async {
+    try {
+      final navigator = jsu.getProperty(js.context, 'navigator');
+      if (navigator == null) {
+        debugPrint("❌ navigator introuvable");
+        return;
+      }
+
+      final serviceWorker = jsu.getProperty(navigator, 'serviceWorker');
+      if (serviceWorker == null) {
+        debugPrint("❌ serviceWorker introuvable");
+        return;
+      }
+
+      final result = await jsu.promiseToFuture(
+        jsu.callMethod(serviceWorker, 'register', [
+          '/DDB/firebase-messaging-sw.js',
+          jsu.jsify({'scope': '/DDB/'}),
+        ]),
+      );
+
+      debugPrint("✅ SW custom enregistré avec succès : $result");
+    } catch (e) {
+      debugPrint("💥 Erreur SW : $e");
+    }
   }
 
   void _checkAuth() async {
