@@ -14,23 +14,31 @@ void main() async {
   await FirebaseMessaging.instance.requestPermission();
 
   Future<void> registerCustomSW() async {
-  try {
-    final navigator = jsu.getProperty(js.context, 'navigator');
-    final serviceWorker = jsu.getProperty(navigator, 'serviceWorker');
+    try {
+      final navigator = jsu.getProperty(js.context, 'navigator');
+      if (navigator == null) {
+        debugPrint("❌ navigator introuvable");
+        return;
+      }
 
-    final result = await jsu.promiseToFuture(
-      jsu.callMethod(serviceWorker, 'register', [
-        '/DDB/firebase-messaging-sw.js',
-        jsu.jsify({'scope': '/DDB/'})
-      ])
-    );
+      final serviceWorker = jsu.getProperty(navigator, 'serviceWorker');
+      if (serviceWorker == null) {
+        debugPrint("❌ serviceWorker introuvable");
+        return;
+      }
 
-    debugPrint("✅ SW custom enregistré avec succès : $result");
-  } catch (e) {
-    debugPrint("💥 Erreur SW : $e");
+      final result = await jsu.promiseToFuture(
+        jsu.callMethod(serviceWorker, 'register', [
+          '/DDB/firebase-messaging-sw.js',
+          jsu.jsify({'scope': '/DDB/'}),
+        ]),
+      );
+
+      debugPrint("✅ SW custom enregistré avec succès : $result");
+    } catch (e) {
+      debugPrint("💥 Erreur SW : $e");
+    }
   }
-}
-
 
   if (kIsWeb) {
     await registerCustomSW();
