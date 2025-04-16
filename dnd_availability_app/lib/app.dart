@@ -8,8 +8,8 @@ import 'screens/home_screen.dart';
 import 'screens/admin_screen.dart';
 import 'screens/game_sessions_screen.dart';
 import 'screens/splash_screen.dart';
-import 'dart:js' as js;
 import 'dart:js_util' as jsu;
+import 'dart:html' as html;
 
 class DndApp extends StatefulWidget {
   const DndApp({super.key});
@@ -30,28 +30,22 @@ class _DndAppState extends State<DndApp> {
     }
   }
 
-    Future<void> registerCustomSW() async {
+  Future<void> registerCustomSW() async {
     try {
-      final navigator = jsu.getProperty(js.context, 'navigator');
-      if (navigator == null) {
-        debugPrint("❌ navigator introuvable");
+      final navigator = html.window.navigator;
+      if (navigator.serviceWorker == null) {
+        debugPrint("❌ Service Worker non supporté par ce navigateur.");
         return;
       }
 
-      final serviceWorker = jsu.getProperty(navigator, 'serviceWorker');
-      if (serviceWorker == null) {
-        debugPrint("❌ serviceWorker introuvable");
-        return;
-      }
-
-      final result = await jsu.promiseToFuture(
-        jsu.callMethod(serviceWorker, 'register', [
+      final registration = await jsu.promiseToFuture(
+        jsu.callMethod(navigator.serviceWorker!, 'register', [
           '/DDB/firebase-messaging-sw.js',
           jsu.jsify({'scope': '/DDB/'}),
         ]),
       );
 
-      debugPrint("✅ SW custom enregistré avec succès : $result");
+      debugPrint("✅ SW custom enregistré avec succès : $registration");
     } catch (e) {
       debugPrint("💥 Erreur SW : $e");
     }
