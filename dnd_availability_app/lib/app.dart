@@ -1,5 +1,6 @@
 import 'package:dnd_availability_app/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,6 +26,7 @@ class _DndAppState extends State<DndApp> {
   void initState() {
     super.initState();
     _checkAuth();
+    FirebaseMessaging.instance.requestPermission();
     if (kIsWeb) {
       registerCustomSW();
     }
