@@ -40,7 +40,9 @@ void main() async {
     }
   }
 
-  if (kIsWeb) {
+  runApp(const DndApp());
+  
+    if (kIsWeb) {
     await registerCustomSW();
 
     FirebaseMessaging.instance
@@ -56,6 +58,4 @@ void main() async {
       debugPrint("📥 Message en foreground : ${message.notification?.title}");
     });
   }
-
-  runApp(const DndApp());
 }
