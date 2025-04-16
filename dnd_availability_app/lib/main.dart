@@ -14,27 +14,23 @@ void main() async {
   await FirebaseMessaging.instance.requestPermission();
 
   Future<void> registerCustomSW() async {
-    try {
-      if (js.context.hasProperty('navigator')) {
-        final navigator = js.context['navigator'];
-        if (navigator.hasProperty('serviceWorker')) {
-          final serviceWorker = navigator['serviceWorker'];
-          await jsu.promiseToFuture(
-            jsu.callMethod(serviceWorker, 'register', [
-              '/DDB/firebase-messaging-sw.js',
-              js.JsObject.jsify({'scope': '/DDB/'}),
-            ]),
-          );
+  try {
+    final navigator = jsu.getProperty(js.context, 'navigator');
+    final serviceWorker = jsu.getProperty(navigator, 'serviceWorker');
 
-          debugPrint("✅ SW custom enregistré avec succès");
-          return;
-        }
-      }
-      debugPrint("❌ Environnement non compatible pour SW");
-    } catch (e) {
-      debugPrint("💥 Erreur SW : $e");
-    }
+    final result = await jsu.promiseToFuture(
+      jsu.callMethod(serviceWorker, 'register', [
+        '/DDB/firebase-messaging-sw.js',
+        jsu.jsify({'scope': '/DDB/'})
+      ])
+    );
+
+    debugPrint("✅ SW custom enregistré avec succès : $result");
+  } catch (e) {
+    debugPrint("💥 Erreur SW : $e");
   }
+}
+
 
   if (kIsWeb) {
     await registerCustomSW();
