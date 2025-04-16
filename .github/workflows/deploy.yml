@@ -37,8 +37,9 @@ jobs:
           rm -rf temp_web
           cp -r dnd_availability_app/build/web ./temp_web  
           
-      - name: Duplicate fallback service worker to root
-        run: cp dnd_availability_app/web/firebase-messaging-sw.js ./temp_web/firebase-messaging-sw.js
+      - name: Duplicate built service worker to root
+        run: cp dnd_availability_app/build/web/firebase-messaging-sw.js ./temp_web/firebase-messaging-sw.js
+        
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
