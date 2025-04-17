@@ -2,17 +2,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 import 'app.dart';
-import 'dart:js_util' as js_util;
-import 'dart:html' as html;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await FirebaseMessaging.instance.requestPermission();
+  /*   await FirebaseMessaging.instance.requestPermission();
 
   // ✅ Forcer l’enregistrement du SW avec l’URL absolue correcte
   if (html.window.navigator.serviceWorker != null) {
@@ -26,7 +23,7 @@ void main() async {
     }
   } else {
     print("❌ navigator.serviceWorker introuvable");
-  }
+  } */
 
   if (kIsWeb) {
     print("✅ Enregistrement du SW délégué au JS dans index.html");
