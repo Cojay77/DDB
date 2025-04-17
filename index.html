@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
 
+<!-- Ajoute Firebase JS SDKs pour Messaging -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js"></script>
+
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyA2hHdz8fse7fMJP8ygu05LtPUDbAqPKVQ",
+    authDomain: "dispo-des-bros.firebaseapp.com",
+    projectId: "dispo-des-bros",
+    messagingSenderId: "604239799472",
+    appId: "1:604239799472:web:c1eb4d25703e47f6c88775"
+  });
+</script>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -39,12 +53,12 @@
       navigator.serviceWorker.register('/DDB/firebase-messaging-sw.js', {
         scope: '/DDB/',
       })
-      .then((reg) => {
-        console.log('✅ SW enregistré avec scope /DDB/', reg);
-      })
-      .catch((err) => {
-        console.error('❌ Erreur SW:', err);
-      });
+        .then((reg) => {
+          console.log('✅ SW enregistré avec scope /DDB/', reg);
+        })
+        .catch((err) => {
+          console.error('❌ Erreur SW:', err);
+        });
     }
   </script>
 
