@@ -26,13 +26,13 @@ class _DndAppState extends State<DndApp> {
   void initState() {
     super.initState();
     _checkAuth();
-    FirebaseMessaging.instance.requestPermission();
+    /* FirebaseMessaging.instance.requestPermission();
     if (kIsWeb) {
       registerCustomSW();
-    }
+    } */
   }
 
-  Future<void> registerCustomSW() async {
+  /* Future<void> registerCustomSW() async {
     try {
       final navigator = html.window.navigator;
       if (navigator.serviceWorker == null) {
@@ -51,7 +51,7 @@ class _DndAppState extends State<DndApp> {
     } catch (e) {
       debugPrint("💥 Erreur SW : $e");
     }
-  }
+  } */
 
   void _checkAuth() async {
     await Future.delayed(const Duration(milliseconds: 100));

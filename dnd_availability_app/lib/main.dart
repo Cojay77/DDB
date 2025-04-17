@@ -6,12 +6,28 @@ import 'firebase_options.dart';
 import 'app.dart';
 /* import 'dart:js' as js;
 import 'dart:js_util' as jsu; */
+import 'dart:html' as html;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // await FirebaseMessaging.instance.requestPermission();
+  await FirebaseMessaging.instance.requestPermission();
+
+// ✅ Forcer l’enregistrement du SW avec l’URL absolue correcte
+  if (html.window.navigator.serviceWorker != null) {
+    try {
+      final registration = await html.window.navigator.serviceWorker!.register(
+        '/DDB/firebase-messaging-sw.js',
+      );
+      print("✅ SW personnalisé enregistré : $registration");
+    } catch (e) {
+      print("💥 Erreur SW : $e");
+    }
+  } else {
+    print("❌ navigator.serviceWorker introuvable");
+  }
+  
 
 /*   Future<void> registerCustomSW() async {
     try {
