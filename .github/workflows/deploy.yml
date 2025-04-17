@@ -37,10 +37,9 @@ jobs:
           rm -rf temp_web
           cp -r dnd_availability_app/build/web ./temp_web  
           
-      - name: Duplicate built service worker to root
-        run: cp dnd_availability_app/build/web/firebase-messaging-sw.js ./temp_web/firebase-messaging-sw.js
-        
-        
+      - name: Duplicate built service worker to GitHub Pages root
+        run: cp dnd_availability_app/build/web/firebase-messaging-sw.js firebase-messaging-sw.js
+                     
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -48,4 +47,5 @@ jobs:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             publish_dir: ./temp_web
             publish_branch: gh-pages
+            keep_files: true   # 👈✅ Ajoute cette ligne
         
