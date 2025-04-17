@@ -29,6 +29,10 @@ void main() async {
   }
 
   if (kIsWeb) {
+    print("✅ Enregistrement du SW délégué au JS dans index.html");
+  }
+
+  /* if (kIsWeb) {
     try {
       final registration = await html.window.navigator.serviceWorker!.register(
         '/DDB/firebase-messaging-sw.js',
@@ -50,7 +54,7 @@ void main() async {
     } catch (e) {
       print("💥 Erreur SW interop : $e");
     }
-  }
+  } */
 
   runApp(const DndApp());
 }
