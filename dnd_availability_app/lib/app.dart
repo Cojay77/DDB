@@ -1,7 +1,5 @@
 import 'package:dnd_availability_app/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screens/login_screen.dart';
@@ -9,8 +7,6 @@ import 'screens/home_screen.dart';
 import 'screens/admin_screen.dart';
 import 'screens/game_sessions_screen.dart';
 import 'screens/splash_screen.dart';
-import 'dart:js_util' as jsu;
-import 'dart:html' as html;
 
 class DndApp extends StatefulWidget {
   const DndApp({super.key});
