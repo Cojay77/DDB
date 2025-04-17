@@ -6,13 +6,15 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js"></script>
 
 <script>
-  firebase.initializeApp({
+  const firebaseConfig = {
     apiKey: "AIzaSyA2hHdz8fse7fMJP8ygu05LtPUDbAqPKVQ",
     authDomain: "dispo-des-bros.firebaseapp.com",
     projectId: "dispo-des-bros",
     messagingSenderId: "604239799472",
     appId: "1:604239799472:web:c1eb4d25703e47f6c88775"
-  });
+  };
+
+  firebase.initializeApp(firebaseConfig)
 </script>
 
 <head>
