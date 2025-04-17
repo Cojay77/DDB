@@ -37,9 +37,16 @@ void main() async {
       print("✅ SW personnalisé enregistré : $registration");
 
       // 👇 Injecter manuellement le Service Worker dans Firebase Messaging (interop JS)
-      final messaging =
-          js_util.getProperty(js_util.globalThis, 'firebase')['messaging']();
-      js_util.callMethod(messaging, 'useServiceWorker', [registration]);
+
+      final firebase = js_util.getProperty(js_util.globalThis, 'firebase');
+
+      if (firebase != null && js_util.hasProperty(firebase, 'messaging')) {
+        final messaging = js_util.callMethod(firebase, 'messaging', []);
+        js_util.callMethod(messaging, 'useServiceWorker', [registration]);
+        print("📬 Service Worker injecté dans Firebase Messaging.");
+      } else {
+        print("⚠️ Firebase ou messaging non disponible côté JS.");
+      }
     } catch (e) {
       print("💥 Erreur SW interop : $e");
     }
